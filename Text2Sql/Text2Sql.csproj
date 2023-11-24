@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +7,12 @@
 	<PackageId>Text2Sql</PackageId>
 	<Version>1.0.0</Version>
 	<Authors>Terje Engelbertsen</Authors>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageProjectUrl>https://github.com/vermion/Text2Sql</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/vermion/Text2Sql</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>MsSQL;OpenAI</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +20,7 @@
     <PackageReference Include="ConsoleTables" Version="2.6.1" />
     <PackageReference Include="Dapper" Version="2.1.24" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+	<None Include="docs\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
