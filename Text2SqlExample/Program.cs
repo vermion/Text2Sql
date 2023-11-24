@@ -16,15 +16,16 @@ namespace Text2SqlExample
             var OpenAIAPIKey = configuration["OpenAIAPIKey"];
 
             string database = "AdventureWorks2017";
+
             string connectionString = $"Server=.\\SQLEXPRESS;Database={database};Trusted_Connection=True";
 
             var text2SqlClient = new Text2Sql.Text2Sql(connectionString, OpenAIAPIKey, database);
 
-            var result = await text2SqlClient.GenerateSqlQueryAsync("Aggregate all the products by sub category and their total list price using the following mssql database tables and corresponding fields: ");
+            var openAIAPIResponse = await text2SqlClient.GenerateSqlQueryAsync("Aggregate all the products by sub category and their total list price using the following mssql database tables and corresponding fields: ");
 
-            Console.WriteLine(result);
+            Console.WriteLine(openAIAPIResponse);
 
-            var sqlResult = await text2SqlClient.ExecuteSqlQueryAsync(result);
+            var sqlResult = await text2SqlClient.ExecuteSqlQueryAsync(openAIAPIResponse);
 
             var tableDataResult = text2SqlClient.DapperObjectsToTableDataObject<object>(sqlResult);
 

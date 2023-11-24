@@ -1,3 +1,6 @@
-This is a project that can convert a regular NLP to a SQL query for any MsSQL database and generates a SQL query which can be used to query the database.
+This is a project that can convert text to a SQL query using OpenAI API for any MsSQL database.
+The program automatically generates the SQL query based on the input text. In the example project I have used Advetureworks2017 and SQL Server express to host the database. 
 
-See the example on how to run the package.
+This project requires an OpenAI API key. You can get one from here: https://openai.com/product
+
+See the example project on how to use the package.
