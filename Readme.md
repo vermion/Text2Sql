@@ -4,3 +4,5 @@ The program automatically generates the SQL query based on the input text. In th
 This project requires an OpenAI API key. You can get one from here: https://openai.com/product
 
 See the example project on how to use the package.
+
+Nuget: https://www.nuget.org/packages/Text2Sql/1.0.0
