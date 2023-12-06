@@ -11,12 +11,14 @@ namespace Text2Sql
         private readonly string _connectionString;
         private readonly string _openAIAPIKey;
         private readonly string _database;
+        private readonly string _model;
 
-        public Text2Sql(string connectionString, string openAIAPIKey, string dataBase)
+        public Text2Sql(string connectionString, string openAIAPIKey, string dataBase, string model = "gpt-4-1106-preview")
         {
             _connectionString = connectionString;
             _openAIAPIKey = openAIAPIKey;
             _database = dataBase;
+            _model = model;
         }
 
         public async Task<string> GenerateSqlQueryAsync(string input)
@@ -63,7 +65,7 @@ namespace Text2Sql
             // Chat request.
             Response<ChatCompletions> chatResponses = await client.GetChatCompletionsAsync(new ChatCompletionsOptions()
             {
-                DeploymentName = "gpt-4-1106-preview", // assumes a matching model deployment or model name
+                DeploymentName = _model, // assumes a matching model deployment or model name
                 Temperature = 0.0f,
                 Messages = { new ChatMessage {
                     Role = ChatRole.User,

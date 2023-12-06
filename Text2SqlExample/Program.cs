@@ -19,7 +19,7 @@ namespace Text2SqlExample
 
             string connectionString = $"Server=.\\SQLEXPRESS;Database={database};Trusted_Connection=True";
 
-            var text2SqlClient = new Text2Sql.Text2Sql(connectionString, OpenAIAPIKey, database);
+            var text2SqlClient = new Text2Sql.Text2Sql(connectionString, OpenAIAPIKey, database, "gpt-4-1106-preview");
 
             var openAIAPIResponse = await text2SqlClient.GenerateSqlQueryAsync("Aggregate all the products by sub category and their total list price using the following mssql database tables and corresponding fields: ");
 
