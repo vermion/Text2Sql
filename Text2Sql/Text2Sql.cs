@@ -21,7 +21,7 @@ namespace Text2Sql
             _model = model;
         }
 
-        public async Task<string> GenerateSqlQueryAsync(string input)
+        public async Task<string> GenerateSqlQueryAsync(string input, bool generateSQL = true)
         {
             OpenAIClient client = new OpenAIClient(_openAIAPIKey);
 
@@ -62,17 +62,37 @@ namespace Text2Sql
 
             Console.WriteLine(allTablesAndFieldsAsString);
 
-            // Chat request.
-            Response<ChatCompletions> chatResponses = await client.GetChatCompletionsAsync(new ChatCompletionsOptions()
+            Response<ChatCompletions> chatResponses;
+
+            if (generateSQL)
             {
-                DeploymentName = _model, // assumes a matching model deployment or model name
-                Temperature = 0.0f,
-                Messages = { new ChatMessage {
+                // Chat request.
+                chatResponses = await client.GetChatCompletionsAsync(new ChatCompletionsOptions()
+                {
+                    DeploymentName = _model, // assumes a matching model deployment or model name
+                    Temperature = 0.0f,
+                    Messages = { new ChatMessage {
                     Role = ChatRole.User,
                     Content = $"{input}: {allTablesAndFieldsAsString} and then generate a Sql query and then put the query between ```sql and ```"
 
                 } }
-            });
+                });
+            }
+            else
+            {
+                // Chat request.
+                chatResponses = await client.GetChatCompletionsAsync(new ChatCompletionsOptions()
+                {
+                    DeploymentName = _model, // assumes a matching model deployment or model name
+                    Temperature = 0.0f,
+                    Messages = { new ChatMessage {
+                    Role = ChatRole.User,
+                    Content = $"{input}: {allTablesAndFieldsAsString}"
+
+                } }
+                });
+            }
+            
 
             return chatResponses.Value.Choices[0].Message.Content;
         }

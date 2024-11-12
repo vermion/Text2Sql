@@ -8,6 +8,8 @@ namespace Text2SqlExample
         {
             Console.WriteLine("Text2Sql!");
 
+            bool runSQL = false;
+
             var builder = new ConfigurationBuilder()
             .AddUserSecrets<Program>(); // Use the User Secrets ID from your .csproj
 
@@ -21,15 +23,18 @@ namespace Text2SqlExample
 
             var text2SqlClient = new Text2Sql.Text2Sql(connectionString, OpenAIAPIKey, database, "gpt-4-1106-preview");
 
-            var openAIAPIResponse = await text2SqlClient.GenerateSqlQueryAsync("Aggregate all the products by sub category and their total list price using the following mssql database tables and corresponding fields: ");
+            var openAIAPIResponse = await text2SqlClient.GenerateSqlQueryAsync("How are the products organised give an answer using the following mssql database tables and corresponding fields: ", runSQL);
 
             Console.WriteLine(openAIAPIResponse);
 
-            var sqlResult = await text2SqlClient.ExecuteSqlQueryAsync(openAIAPIResponse);
+            if (runSQL)
+            {
+                var sqlResult = await text2SqlClient.ExecuteSqlQueryAsync(openAIAPIResponse);
 
-            var tableDataResult = text2SqlClient.DapperObjectsToTableDataObject<object>(sqlResult);
+                var tableDataResult = text2SqlClient.DapperObjectsToTableDataObject<object>(sqlResult);
 
-            text2SqlClient.PrintTableDataToConsole(tableDataResult);
+                text2SqlClient.PrintTableDataToConsole(tableDataResult);
+            }
         }
     }
 }
